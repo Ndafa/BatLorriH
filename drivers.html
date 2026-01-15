@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drive With Us - BaTLorriH</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/main.css">
+    <style>
+        /* Global Background with backg.jpeg */
+        body {
+            background: linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.95)), 
+                        url('assets/backg.jpeg') center/cover no-repeat fixed;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            color: #333;
+            min-height: 100vh;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 3px solid transparent;
+            border-image: linear-gradient(90deg, #0056B3, #00A859) 1;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            height: 80px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: url('assets/logo.png') center/contain no-repeat;
+            background-size: contain;
+            border-radius: 10px;
+            text-indent: -9999px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 86, 179, 0.2);
+        }
+
+        .logo-text {
+            font-size: 1.75rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #0056B3 0%, #00A859 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Navigation */
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #666;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: #0056B3;
+            background: rgba(0, 86, 179, 0.1);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #0056B3;
+            cursor: pointer;
+        }
+
+        /* Page Hero */
+        .page-hero {
+            background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.95)),
+                        url('assets/backg.jpeg') center/cover no-repeat;
+            padding: 6rem 0 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .page-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #0056B3, #00A859);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-subtitle {
+            font-size: 1.25rem;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+        }
+
+        /* Drivers Section */
+        .drivers-section {
+            padding: 4rem 0;
+            background: rgba(248, 250, 252, 0.85);
+            backdrop-filter: blur(5px);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #111827;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: #6b7280;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            text-align: center;
+        }
+
+        /* Truck Road Animation */
+        .truck-road-animation {
+            position: relative;
+            height: 100px;
+            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 3rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .road-lines {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: repeating-linear-gradient(
+                90deg,
+                #FFD166,
+                #FFD166 20px,
+                transparent 20px,
+                transparent 40px
+            );
+            animation: roadMove 1s linear infinite;
+        }
+
+        @keyframes roadMove {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-40px);
+            }
+        }
+
+        .moving-truck {
+            position: absolute;
+            top: 20px;
+            left: -100px;
+            width: 100px;
+            height: 50px;
+            background: url('assets/logo.png') center/contain no-repeat;
+            background-size: contain;
+            background-color: #0057b300;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.0);
+            animation: driveAcross 10s linear infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .moving-truck::after {
+               content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: url('assets/logo.png') center/contain no-repeat;
+                filter: brightness(0) invert(1);
+                z-index: 1;
+            }
+
+        @keyframes driveAcross {
+            0% {
+                left: -100px;
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+            100% {
+                left: calc(100% + 100px);
+                transform: translateY(0);
+            }
+        }
+
+        /* Earnings Calculator */
+        .earnings-calculator {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .earnings-calculator::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #0056B3, #00A859);
+        }
+
+        .calculator-inputs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #374151;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #0056B3;
+            box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.1);
+        }
+
+        .select {
+            appearance: none;
+            background: white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E") no-repeat right 1rem center;
+            background-size: 1.25rem;
+            padding-right: 3rem;
+        }
+
+        .calculator-result {
+            text-align: center;
+            padding: 2.5rem;
+            background: linear-gradient(135deg, rgba(0, 86, 179, 0.1) 0%, rgba(0, 168, 89, 0.1) 100%);
+            border-radius: 15px;
+            border: 2px solid rgba(0, 86, 179, 0.2);
+        }
+
+        .estimated-earnings {
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #0056B3 0%, #00A859 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 1rem 0;
+        }
+
+        /* Benefits Grid */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .benefit-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-align: center;
+            border: 2px solid transparent;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .benefit-card.reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+            border-color: #0056B3;
+        }
+
+        .benefit-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #0056B3, #00A859);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 1.75rem;
+            box-shadow: 0 8px 20px rgba(0, 86, 179, 0.3);
+        }
+
+        .benefit-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 1rem;
+        }
+
+        .benefit-card p {
+            color: #666;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Driver Stats */
+        .driver-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 4rem 0;
+        }
+
+        .stat-card-driver {
+            background: linear-gradient(135deg, #0056B3 0%, #00A859 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 86, 179, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card-driver:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 86, 179, 0.4);
+        }
+
+        .stat-card-driver::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('assets/logo.png') center/30% no-repeat;
+            opacity: 0.1;
+        }
+
+        .stat-number-driver {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Requirements List */
+        .requirements-list {
+            list-style: none;
+            padding: 0;
+            margin: 2rem 0;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .requirements-list li {
+            padding: 1.5rem;
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border-left: 4px solid #0056B3;
+        }
+
+        .requirements-list li:hover {
+            transform: translateX(5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .requirements-list li i {
+            color: #00A859;
+            font-size: 1.25rem;
+            margin-top: 0.25rem;
+            flex-shrink: 0;
+        }
+
+        .requirements-list li strong {
+            display: block;
+            font-size: 1.125rem;
+            color: #111827;
+            margin-bottom: 0.5rem;
+        }
+
+        .requirements-list li p {
+            color: #666;
+            font-size: 0.875rem;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        /* Application Form */
+        #apply {
+            margin-top: 4rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.875rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0056B3 0%, #00A859 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 86, 179, 0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 86, 179, 0.3);
+        }
+
+        .btn-lg {
+            padding: 1rem 2.5rem;
+            font-size: 1.125rem;
+        }
+
+        /* Animation Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            }
+            
+            .nav-links.show {
+                display: flex;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .calculator-inputs {
+                grid-template-columns: 1fr;
+            }
+            
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .driver-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .estimated-earnings {
+                font-size: 2.5rem;
+            }
+            
+            .header-container {
+                height: 70px;
+            }
+            
+            .logo-icon {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .logo-text {
+                font-size: 1.5rem;
+            }
+            
+            .requirements-list li {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-container">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon" title="BaTLorriH Logo">BL</div>
+                    <div class="logo-text">BaTLorriH</div>
+                </a>
+                
+                <nav class="nav-links">
+                    <a href="how-it-works.html" class="nav-link">How It Works</a>
+                    <a href="vehicles.html" class="nav-link">Vehicles</a>
+                    <a href="book.html" class="nav-link">Book Now</a>
+                    <a href="drivers.html" class="nav-link active">Drive With Us</a>
+                    <a href="about.html" class="nav-link">About</a>
+                    <a href="drivers.html#apply" class="btn btn-primary">
+                        <i class="fas fa-user-plus"></i> Apply Now
+                    </a>
+                </nav>
+                
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <section class="page-hero">
+        <div class="container">
+            <div class="page-hero-content">
+                <h1 class="page-title">Drive With BaTLorriH</h1>
+                <p class="page-subtitle">Turn your vehicle into earnings. Join Namibia's fastest-growing logistics platform and earn on your own schedule.</p>
+                <a href="#apply" class="btn btn-primary btn-lg">
+                    <i class="fas fa-truck-moving"></i> Start Driving
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="drivers-section">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-title">Earn More with Your Vehicle</h2>
+                <p class="section-subtitle">Flexible hours, competitive earnings, and full support from our team.</p>
+            </div>
+            
+            <!-- Truck Road Animation -->
+            <div class="truck-road-animation">
+                <div class="road-lines"></div>
+                <div class="moving-truck"></div>
+            </div>
+            
+            <!-- Earnings Calculator -->
+            <div class="earnings-calculator">
+                <h3 style="text-align: center; margin-bottom: 2rem; color: #111827;">
+                    <i class="fas fa-calculator"></i> Calculate Your Potential Earnings
+                </h3>
+                
+                <div class="calculator-inputs">
+                    <div class="form-group">
+                        <label for="vehicleTypeCalc"><i class="fas fa-truck"></i> Your Vehicle Type</label>
+                        <select id="vehicleTypeCalc" class="form-control select">
+                            <option value="bakkie">Bakkie</option>
+                            <option value="5ton">5-Ton Truck</option>
+                            <option value="lorry">Lorry</option>
+                            <option value="special">Special Vehicle</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="hoursPerWeek"><i class="fas fa-clock"></i> Hours/Week</label>
+                        <input type="range" id="hoursPerWeek" class="form-control" min="10" max="70" value="30">
+                        <div style="display: flex; justify-content: space-between; margin-top: 0.5rem;">
+                            <span style="font-size: 0.875rem; color: #666;">10h</span>
+                            <span id="hoursValue" style="font-weight: 600;">30h</span>
+                            <span style="font-size: 0.875rem; color: #666;">70h</span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="area"><i class="fas fa-map-marker-alt"></i> Operating Area</label>
+                        <select id="area" class="form-control select">
+                            <option value="windhoek">Windhoek</option>
+                            <option value="coastal">Coastal Region</option>
+                            <option value="northern">Northern Namibia</option>
+                            <option value="national">Nationwide</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="calculator-result">
+                    <p style="color: #666; font-size: 0.875rem; margin-bottom: 0.5rem;">Estimated Weekly Earnings</p>
+                    <div class="estimated-earnings" id="estimatedEarnings">N$ 5,400</div>
+                    <p style="color: #666; font-size: 0.875rem;">Based on current demand in your area</p>
+                </div>
+            </div>
+            
+            <!-- Driver Benefits -->
+            <div class="text-center">
+                <h2 class="section-title">Why Drive With Us</h2>
+                <p class="section-subtitle">Benefits designed for drivers, by drivers</p>
+            </div>
+            
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <h3>Competitive Earnings</h3>
+                    <p>Keep up to 85% of your fare. Get paid weekly via multiple payment methods.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h3>Flexible Schedule</h3>
+                    <p>Drive whenever you want. No shifts, no minimum hours. You're your own boss.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Insurance & Support</h3>
+                    <p>Comprehensive insurance coverage and 24/7 driver support for peace of mind.</p>
+                </div>
+            </div>
+            
+            <!-- Driver Statistics -->
+            <div class="driver-stats">
+                <div class="stat-card-driver">
+                    <div class="stat-number-driver">85%</div>
+                    <div class="stat-label">Earnings Kept</div>
+                </div>
+                
+                <div class="stat-card-driver">
+                    <div class="stat-number-driver">N$ 25k+</div>
+                    <div class="stat-label">Avg Monthly Earnings</div>
+                </div>
+                
+                <div class="stat-card-driver">
+                    <div class="stat-number-driver">24/7</div>
+                    <div class="stat-label">Support Available</div>
+                </div>
+                
+                <div class="stat-card-driver">
+                    <div class="stat-number-driver">500+</div>
+                    <div class="stat-label">Active Drivers</div>
+                </div>
+            </div>
+            
+            <!-- Requirements -->
+            <div class="text-center">
+                <h2 class="section-title">Driver Requirements</h2>
+                <p class="section-subtitle">What you need to get started</p>
+            </div>
+            
+            <ul class="requirements-list">
+                <li>
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <strong>Valid Driver's License</strong>
+                        <p>Must be valid for the vehicle class you'll be driving</p>
+                    </div>
+                </li>
+                
+                <li>
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <strong>Vehicle Registration & Insurance</strong>
+                        <p>Current registration and comprehensive insurance</p>
+                    </div>
+                </li>
+                
+                <li>
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <strong>Vehicle Age & Condition</strong>
+                        <p>Vehicle must be less than 15 years old and in good condition</p>
+                    </div>
+                </li>
+                
+                <li>
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <strong>Smartphone</strong>
+                        <p>Android or iOS smartphone with data capability</p>
+                    </div>
+                </li>
+                
+                <li>
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <strong>Clean Record</strong>
+                        <p>No major traffic violations or criminal record</p>
+                    </div>
+                </li>
+            </ul>
+            
+            <!-- Application Form -->
+            <div id="apply" class="earnings-calculator" style="margin-top: 4rem;">
+                <h3 style="text-align: center; margin-bottom: 2rem; color: #111827;">
+                    <i class="fas fa-file-alt"></i> Apply to Drive
+                </h3>
+                
+                <form id="driverApplication" data-form="driver">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="driverName"><i class="fas fa-user"></i> Full Name</label>
+                            <input type="text" id="driverName" class="form-control" placeholder="Your full name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="driverEmail"><i class="fas fa-envelope"></i> Email Address</label>
+                            <input type="email" id="driverEmail" class="form-control" placeholder="your@email.com" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="driverPhone"><i class="fas fa-phone"></i> Phone Number</label>
+                            <input type="tel" id="driverPhone" class="form-control" placeholder="+264 81 123 4567" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="driverVehicle"><i class="fas fa-truck"></i> Vehicle Type</label>
+                            <select id="driverVehicle" class="form-control select" required>
+                                <option value="">Select your vehicle</option>
+                                <option value="bakkie">Bakkie</option>
+                                <option value="5ton">5-Ton Truck</option>
+                                <option value="lorry">Lorry</option>
+                                <option value="refrigerated">Refrigerated Truck</option>
+                                <option value="flatbed">Flatbed Truck</option>
+                                <option value="tanker">Tanker Truck</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="driverExperience"><i class="fas fa-road"></i> Years of Driving Experience</label>
+                        <input type="number" id="driverExperience" class="form-control" placeholder="e.g. 5" min="1" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="driverAreas"><i class="fas fa-map"></i> Preferred Operating Areas</label>
+                        <textarea id="driverAreas" class="form-control" rows="3" placeholder="Areas you prefer to operate in..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label style="display: flex; align-items: flex-start; gap: 0.5rem; cursor: pointer;">
+                            <input type="checkbox" required style="margin-top: 0.25rem;">
+                            <span style="color: #666; font-size: 0.875rem;">
+                                I confirm that I meet all driver requirements and have read the terms and conditions
+                            </span>
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1rem; font-size: 1.125rem;">
+                        <i class="fas fa-paper-plane"></i> Submit Application
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-brand">
+                    <a href="index.html" class="footer-logo">
+                        <div class="logo-icon" style="width: 40px; height: 40px; background: url('assets/logo.png') center/contain no-repeat; filter: brightness(0) invert(1);"></div>
+                        <div class="logo-text">BaTLorriH</div>
+                    </a>
+                    <p class="footer-description">
+                        Namibia's leading digital logistics platform connecting shippers with verified transport providers across the country.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="how-it-works.html"><i class="fas fa-chevron-right"></i> How It Works</a></li>
+                        <li><a href="vehicles.html"><i class="fas fa-chevron-right"></i> Vehicle Types</a></li>
+                        <li><a href="book.html"><i class="fas fa-chevron-right"></i> Book a Vehicle</a></li>
+                        <li><a href="drivers.html"><i class="fas fa-chevron-right"></i> Drive With Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Help Center</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Safety Center</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Community Guidelines</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Privacy Policy</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-contact">
+                    <h3>Contact Us</h3>
+                    <a href="tel:+264612345678">
+                        <i class="fas fa-phone"></i> +264 61 234 5678
+                    </a>
+                    <a href="mailto:info@batlorrih.com.na">
+                        <i class="fas fa-envelope"></i> info@batlorrih.com.na
+                    </a>
+                    <a href="https://wa.me/264811234567" target="_blank">
+                        <i class="fab fa-whatsapp"></i> +264 81 123 4567
+                    </a>
+                    <a href="#">
+                        <i class="fas fa-map-marker-alt"></i> Windhoek, Namibia
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 BaTLorriH Logistics. All rights reserved. | Connecting Namibia, One Load at a Time</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Earnings Calculator
+        document.addEventListener('DOMContentLoaded', function() {
+            const hoursSlider = document.getElementById('hoursPerWeek');
+            const hoursValue = document.getElementById('hoursValue');
+            const earningsDisplay = document.getElementById('estimatedEarnings');
+            
+            function updateEarnings() {
+                const vehicleType = document.getElementById('vehicleTypeCalc').value;
+                const hours = parseInt(hoursSlider.value);
+                const area = document.getElementById('area').value;
+                
+                let hourlyRate = 150;
+                
+                switch(vehicleType) {
+                    case 'bakkie':
+                        hourlyRate = 150;
+                        break;
+                    case '5ton':
+                        hourlyRate = 300;
+                        break;
+                    case 'lorry':
+                        hourlyRate = 450;
+                        break;
+                    case 'special':
+                        hourlyRate = 550;
+                        break;
+                }
+                
+                // Area multiplier
+                let areaMultiplier = 1;
+                switch(area) {
+                    case 'windhoek':
+                        areaMultiplier = 1.2;
+                        break;
+                    case 'coastal':
+                        areaMultiplier = 1.1;
+                        break;
+                    case 'national':
+                        areaMultiplier = 1.3;
+                        break;
+                }
+                
+                const weeklyEarnings = Math.round(hourlyRate * hours * areaMultiplier * 0.85); // 85% driver cut
+                earningsDisplay.textContent = `N$ ${weeklyEarnings.toLocaleString()}`;
+            }
+            
+            hoursSlider.addEventListener('input', function() {
+                hoursValue.textContent = `${this.value}h`;
+                updateEarnings();
+            });
+            
+            document.getElementById('vehicleTypeCalc').addEventListener('change', updateEarnings);
+            document.getElementById('area').addEventListener('change', updateEarnings);
+            
+            // Initialize
+            updateEarnings();
+            
+            // Scroll reveal animation
+            const benefitCards = document.querySelectorAll('.benefit-card');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.classList.add('active');
+                        }, index * 100);
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            benefitCards.forEach(card => observer.observe(card));
+            
+            // Mobile menu toggle
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navLinks = document.querySelector('.nav-links');
+            
+            mobileMenuBtn.addEventListener('click', function() {
+                navLinks.classList.toggle('show');
+            });
+            
+            // Form submission
+            const applicationForm = document.getElementById('driverApplication');
+            if (applicationForm) {
+                applicationForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Form validation
+                    const name = document.getElementById('driverName').value;
+                    const email = document.getElementById('driverEmail').value;
+                    const phone = document.getElementById('driverPhone').value;
+                    
+                    if (!name || !email || !phone) {
+                        alert('Please fill in all required fields.');
+                        return;
+                    }
+                    
+                    // Show success message
+                    alert('Thank you for your application! We will contact you within 24 hours.');
+                    applicationForm.reset();
+                    
+                    // Scroll to top
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            }
+            
+            // Header scroll effect
+            window.addEventListener('scroll', function() {
+                const header = document.querySelector('header');
+                if (window.scrollY > 50) {
+                    header.style.background = 'rgba(255, 255, 255, 0.98)';
+                    header.style.backdropFilter = 'blur(10px)';
+                } else {
+                    header.style.background = '';
+                    header.style.backdropFilter = '';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

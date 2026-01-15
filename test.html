@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BaTLorriH - Namibia's Uber for Logistics</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        .navbar {
+            background-color: #003366;
+        }
+        .hero {
+            background: linear-gradient(135deg, #003366 0%, #00A86B 100%);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+        .btn-primary {
+            background-color: #00A86B;
+            border-color: #00A86B;
+        }
+        .btn-primary:hover {
+            background-color: #007a5a;
+        }
+        .section {
+            padding: 60px 0;
+        }
+        .vehicle-card {
+            border: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        .vehicle-card:hover {
+            transform: translateY(-5px);
+        }
+        .trust-indicator {
+            color: #00A86B;
+        }
+        .whatsapp-btn {
+            background-color: #25D366;
+            border: none;
+        }
+        .sms-btn {
+            background-color: #007bff;
+            border: none;
+        }
+        footer {
+            background-color: #003366;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+        }
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .section { padding: 40px 0; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#home">BaTLorriH</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#vehicles">Vehicles</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#request">Request Load</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#trust">Trust</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <h1 class="display-4">Connect Shippers with Verified Haulers in Namibia</h1>
+            <p class="lead">BaTLorriH: Your go-to platform for bakkies, trucks, lorries, and haulers. Fast, reliable, and trusted logistics.</p>
+            <a href="#request" class="btn btn-primary btn-lg">Request a Load</a>
+        </div>
+    </section>
+
+    <!-- Vehicle Categories Section -->
+    <section id="vehicles" class="section">
+        <div class="container">
+            <h2 class="text-center mb-5" style="color: #003366;">Vehicle Categories</h2>
+            <div class="row">
+                <div class="col-md-3 col-sm-6 mb-4">
+                    <div class="card vehicle-card">
+                        <img src="https://via.placeholder.com/300x200?text=Bakkie" class="card-img-top" alt="Bakkie">
+                        <div class="card-body">
+                            <h5 class="card-title">Bakkies</h5>
+                            <p class="card-text">Perfect for small loads and urban deliveries.</p>
+                            <span class="badge bg-success">Verified</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-4">
+                    <div class="card vehicle-card">
+                        <img src="https://via.placeholder.com/300x200?text=Truck" class="card-img-top" alt="Truck">
+                        <div class="card-body">
+                            <h5 class="card-title">Trucks</h5>
+                            <p class="card-text">Ideal for medium-sized cargo across regions.</p>
+                            <span class="badge bg-success">Verified</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-4">
+                    <div class="card vehicle-card">
+                        <img src="https://via.placeholder.com/300x200?text=Lorry" class="card-img-top" alt="Lorry">
+                        <div class="card-body">
+                            <h5 class="card-title">Lorries</h5>
+                            <p class="card-text">Heavy-duty for large-scale shipments.</p>
+                            <span class="badge bg-success">Verified</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-4">
+                    <div class="card vehicle-card">
+                        <img src="https://via.placeholder.com/300x200?text=Hauler" class="card-img-top" alt="Hauler">
+                        <div class="card-body">
+                            <h5 class="card-title">Haulers</h5>
+                            <p class="card-text">Specialized for towing and oversized loads.</p>
+                            <span class="badge bg-success">Verified</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Request Load Section -->
+    <section id="request" class="section bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5" style="color: #003366;">Request a Load</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <form id="loadForm">
+                        <div class="mb-3">
+                            <label for="pickup" class="form-label">Pickup Location</label>
+                            <input type="text" class="form-control" id="pickup" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="dropoff" class="form-label">Drop-off Location</label>
+                            <input type="text" class="form-control" id="dropoff" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="vehicleType" class="form-label">Vehicle Type</label>
+                            <select class="form-select" id="vehicleType" required>
+                                <option value="">Select...</option>
+                                <option value="bakkie">Bakkie</option>
+                                <option value="truck">Truck</option>
+                                <option value="lorry">Lorry</option>
+                                <option value="hauler">Hauler</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="details" class="form-label">Load Details</label>
+                            <textarea class="form-control" id="details" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary me-2">Submit Request</button>
+                        <button type="button" class="btn whatsapp-btn me-2" onclick="openWhatsApp()">Book via WhatsApp</button>
+                        <button type="button" class="btn sms-btn" onclick="openSMS()">Book via SMS</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Indicators Section -->
+    <section id="trust" class="section">
+        <div class="container">
+            <h2 class="text-center mb-5" style="color: #003366;">Why Trust BaTLorriH?</h2>
+            <div class="row text-center">
+                <div class="col-md-4 mb-4">
+                    <i class="bi bi-shield-check trust-indicator" style="font-size: 3rem;"></i>
+                    <h5>Verified Partners</h5>
+                    <p>All drivers and vehicles are vetted for safety and reliability.</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <i class="bi bi-star-fill trust-indicator" style="font-size: 3rem;"></i>
+                    <h5>High Ratings</h5>
+                    <p>Average 4.8/5 stars from over 10,000 satisfied customers.</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <i class="bi bi-chat-dots trust-indicator" style="font-size: 3rem;"></i>
+                    <h5>Testimonials</h5>
+                    <p>"BaTLorriH made my shipment seamless!" - John D., Windhoek</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section bg-light">
+        <div class="container text-center">
+            <h2 style="color: #003366;">Get in Touch</h2>
+            <p>Need help? Reach us via WhatsApp or SMS for quick assistance.</p>
+            <button class="btn whatsapp-btn btn-lg me-2" onclick="openWhatsApp()">WhatsApp Us</button>
+            <button class="btn sms-btn btn-lg" onclick="openSMS()">SMS Us</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 BaTLorriH. All rights reserved. Proudly Namibian.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Smooth scrolling for nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Form submission (placeholder - integrate with backend)
+        document.getElementById('loadForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Load request submitted! We\'ll connect you soon.');
+        });
+
+        // WhatsApp link (replace with your number)
+        function openWhatsApp() {
+            window.open('https://wa.me/264123456789?text=Hi%20BaTLorriH,%20I%20need%20to%20book%20a%20load.', '_blank');
+        }
+
+        // SMS link (replace with your number)
+        function openSMS() {
+            window.open('sms:264123456789?body=Hi%20BaTLorriH,%20I%20need%20to%20book%20a%20load.', '_blank');
+        }
+    </script>
+</body>
+</html>

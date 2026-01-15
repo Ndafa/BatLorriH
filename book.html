@@ -1,0 +1,2100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Now - BaTLorriH</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/main.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script type="module">
+        // Supabase Configuration - UPDATED
+        const SUPABASE_URL = 'https://ogkzdzsmnrwkldciwsbc.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9na3pkenNtbnJ3a2xkY2l3c2JjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjgyNzgzMTEsImV4cCI6MjA4Mzg1NDMxMX0.0mLg5okNVxUzsk6Sm29CtOdpsJEX5McRuQULbjv2P5k';
+
+        // Create Supabase client with better configuration
+        window.supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
+            auth: {
+                autoRefreshToken: true,
+                persistSession: true,
+                detectSessionInUrl: true
+            },
+            db: {
+                schema: 'public'
+            },
+            global: {
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`
+                }
+            }
+        });
+
+        console.log('Supabase client initialized with enhanced config');
+        </script>
+    <style>
+        /* Background with backg.jpeg */
+        body {
+            background: linear-gradient(rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.97)), 
+                        url('assets/backg.jpeg') center/cover no-repeat fixed;
+            font-family: 'Inter', sans-serif;
+            color: #333;
+        }
+
+        .booking-section {
+            padding: 4rem 0;
+            min-height: calc(100vh - 80px);
+        }
+        
+        .booking-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .booking-form-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .booking-form-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #0056B3, #00A859);
+        }
+        
+        .form-progress {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .form-progress::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: #E5E7EB;
+            z-index: 1;
+        }
+        
+        .progress-step {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            flex: 1;
+        }
+        
+        .step-circle {
+            width: 35px;
+            height: 35px;
+            background: #E5E7EB;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.5rem;
+            font-weight: 600;
+            color: #6B7280;
+            transition: all 0.3s ease;
+            border: 3px solid white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .step-circle.active {
+            background: linear-gradient(135deg, #0056B3 0%, #00A859 100%);
+            color: white;
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 86, 179, 0.3);
+        }
+        
+        .step-circle.completed {
+            background: #00A859;
+            color: white;
+        }
+        
+        .step-label {
+            font-size: 0.75rem;
+            color: #6B7280;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .step-label.active {
+            color: #0056B3;
+            font-weight: 600;
+        }
+        
+        .form-step {
+            display: none;
+            animation: slideUp 0.5s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .form-step.active {
+            display: block;
+        }
+        
+        .form-step h3 {
+            font-size: 1.5rem;
+            color: #111827;
+            margin-bottom: 2rem;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .form-group.error .form-control {
+        border-color: #dc2626 !important;
+        box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1) !important;
+    }
+    
+    .error-message {
+        color: #dc2626;
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+        animation: fadeIn 0.3s ease-out;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-5px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        @media (min-width: 768px) {
+            .form-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        .form-group {
+            position: relative;
+        }
+        
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #374151;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .form-group label i {
+            color: #0056B3;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 2px solid #D1D5DB;
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #0056B3;
+            box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.1);
+            transform: translateY(-1px);
+        }
+        
+        .form-control.select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236B7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1.5em;
+            padding-right: 3rem;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            gap: 1rem;
+        }
+        
+        .form-actions .btn {
+            min-width: 120px;
+        }
+        
+        .booking-sidebar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .booking-sidebar h3 {
+            color: #111827;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            text-align: center;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .booking-sidebar h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #0056B3, #00A859);
+            border-radius: 2px;
+        }
+        
+        /* Vehicle Preview with Image */
+        .vehicle-preview-container {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .vehicle-preview {
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(135deg, rgba(0, 86, 179, 0.1) 0%, rgba(0, 168, 89, 0.1) 100%);
+            border-radius: 15px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            position: relative;
+            border: 3px solid rgba(0, 86, 179, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .vehicle-preview:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 86, 179, 0.2);
+            border-color: #0056B3;
+        }
+        
+        .vehicle-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .vehicle-preview:hover img {
+            transform: scale(1.05);
+        }
+        
+        .vehicle-preview .vehicle-name {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            color: white;
+            padding: 0.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .vehicle-preview .default-icon {
+            font-size: 4rem;
+            color: #0056B3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+        
+        .booking-summary {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 2px solid #E5E7EB;
+        }
+        
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #F3F4F6;
+        }
+        
+        .summary-item.total {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #111827;
+            border-bottom: none;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid #D1D5DB;
+        }
+        
+        .summary-value {
+            font-weight: 600;
+            color: #374151;
+        }
+        
+        .price-estimate {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #00A859;
+            text-align: center;
+            margin: 1.5rem 0;
+            background: linear-gradient(135deg, #0056B3 0%, #00A859 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .estimate-note {
+            font-size: 0.875rem;
+            color: #6B7280;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+        
+        .whatsapp-booking-card {
+            background: linear-gradient(135deg, rgba(37, 211, 102, 0.1) 0%, rgba(18, 140, 126, 0.1) 100%);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            text-align: center;
+            border: 2px solid rgba(37, 211, 102, 0.2);
+        }
+        
+        .whatsapp-booking-card h4 {
+            color: #075E54;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-whatsapp {
+            background: #25D366;
+            color: white;
+            width: 100%;
+            padding: 0.875rem;
+            border-radius: 10px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+        
+        .btn-whatsapp:hover {
+            background: #1da851;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3);
+        }
+        
+        @media (min-width: 992px) {
+            .booking-container {
+                grid-template-columns: 2fr 1fr;
+            }
+        }
+        
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.875rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #0056B3 0%, #00A859 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 86, 179, 0.2);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 86, 179, 0.3);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: #0056B3;
+            border: 2px solid #0056B3;
+        }
+        
+        .btn-outline:hover {
+            background: #0056B3;
+            color: white;
+        }
+        
+        .btn-lg {
+            padding: 1rem 2.5rem;
+            font-size: 1.125rem;
+        }
+        
+        /* Animated Truck */
+        .animating-truck {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 10px 30px rgba(0, 86, 179, 0.3);
+            border: 3px solid #0056B3;
+            z-index: 1000;
+            cursor: pointer;
+            animation: truckDelivery 3s ease-in-out infinite;
+            transition: all 0.3s ease;
+        }
+        
+        .animating-truck:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(0, 86, 179, 0.4);
+            animation-play-state: paused;
+        }
+        
+        .animating-truck img {
+            width: 60%;
+            height: 60%;
+            object-fit: contain;
+        }
+        
+        @keyframes truckDelivery {
+            0%, 100% {
+                transform: translateX(0) rotate(0deg);
+            }
+            25% {
+                transform: translateX(-20px) rotate(-5deg);
+            }
+            50% {
+                transform: translateX(-40px) rotate(0deg);
+            }
+            75% {
+                transform: translateX(-20px) rotate(5deg);
+            }
+        }
+        
+        /* Booking Confirmation Modal */
+        .confirmation-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        
+        .confirmation-modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        .confirmation-content {
+            background: white;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            transform: scale(0.8);
+            opacity: 0;
+            animation: spiralIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+        
+        @keyframes spiralIn {
+            0% {
+                transform: scale(0.8) rotate(-180deg);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+        }
+        
+        .confirmation-header {
+            background: linear-gradient(135deg, #0056B3 0%, #00A859 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            border-radius: 20px 20px 0 0;
+            position: relative;
+        }
+        
+        .confirmation-header h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .confirmation-header p {
+            opacity: 0.9;
+            font-size: 1.125rem;
+        }
+        
+        .confirmation-body {
+            padding: 2rem;
+        }
+        
+        .booking-details {
+            background: #F9FAFB;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .booking-details h3 {
+            color: #111827;
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+            border-bottom: 2px solid #0056B3;
+            padding-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid #E5E7EB;
+        }
+        
+        .detail-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .detail-label {
+            font-weight: 600;
+            color: #374151;
+        }
+        
+        .detail-value {
+            color: #111827;
+            font-weight: 500;
+            text-align: right;
+            max-width: 60%;
+        }
+        
+        .confirmation-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .confirmation-actions .btn {
+            flex: 1;
+            padding: 1rem;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            transition: all 0.3s ease;
+        }
+        
+        .close-modal:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+        
+        .vehicle-image-map {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .vehicle-image-map .vehicle-preview {
+            height: 120px;
+        }
+        
+        .route-map {
+            background: linear-gradient(135deg, rgba(0, 86, 179, 0.1) 0%, rgba(0, 168, 89, 0.1) 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0056B3;
+            font-size: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-container">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon" style="background: url('assets/logo.png') center/contain no-repeat;">BL</div>
+                    <div class="logo-text">BaTLorriH</div>
+                </a>
+                
+                <nav class="nav-links">
+                    <a href="how-it-works.html" class="nav-link">How It Works</a>
+                    <a href="vehicles.html" class="nav-link">Vehicles</a>
+                    <a href="drivers.html" class="nav-link">Drive With Us</a>
+                    <a href="about.html" class="nav-link">About</a>
+                    <a href="contact.html" class="nav-link">Contact</a>
+                    <a href="book.html" class="btn btn-primary">
+                        <i class="fas fa-shipping-fast"></i> Get Started
+                    </a>
+                </nav>
+                
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <section class="booking-section">
+        <div class="container">
+            <div class="booking-container">
+                <div class="booking-form-container">
+                    <div class="form-progress">
+                        <div class="progress-step">
+                            <div class="step-circle active">1</div>
+                            <div class="step-label active">Load Details</div>
+                        </div>
+                        <div class="progress-step">
+                            <div class="step-circle">2</div>
+                            <div class="step-label">Vehicle & Time</div>
+                        </div>
+                        <div class="progress-step">
+                            <div class="step-circle">3</div>
+                            <div class="step-label">Contact Info</div>
+                        </div>
+                        <div class="progress-step">
+                            <div class="step-circle">4</div>
+                            <div class="step-label">Confirmation</div>
+                        </div>
+                    </div>
+                    
+                    <form id="bookingForm" data-form="booking">
+                        <!-- Step 1: Load Details -->
+                        <div class="form-step active" id="step1">
+                            <h3><i class="fas fa-box"></i> Tell Us About Your Load</h3>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="loadType"><i class="fas fa-tag"></i> Load Type</label>
+                                    <select id="loadType" class="form-control select" required>
+                                        <option value="">Select load type</option>
+                                        <option value="furniture">Furniture & Household Goods</option>
+                                        <option value="construction">Construction Materials</option>
+                                        <option value="agriculture">Agricultural Products</option>
+                                        <option value="retail">Retail & Commercial Goods</option>
+                                        <option value="industrial">Industrial Equipment</option>
+                                        <option value="vehicles">Vehicles & Machinery</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="weight"><i class="fas fa-weight-hanging"></i> Approx. Weight (kg)</label>
+                                    <input type="number" id="weight" class="form-control" placeholder="e.g. 500" min="1" max="50000" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="dimensions"><i class="fas fa-ruler-combined"></i> Dimensions (L×W×H)</label>
+                                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem;">
+                                        <input type="number" id="length" class="form-control" placeholder="Length (m)" min="0.1" step="0.1">
+                                        <input type="number" id="width" class="form-control" placeholder="Width (m)" min="0.1" step="0.1">
+                                        <input type="number" id="height" class="form-control" placeholder="Height (m)" min="0.1" step="0.1">
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="value"><i class="fas fa-money-bill-wave"></i> Load Value (N$)</label>
+                                    <input type="number" id="value" class="form-control" placeholder="e.g. 10000" min="0">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="description"><i class="fas fa-file-alt"></i> Additional Description</label>
+                                <textarea id="description" class="form-control" rows="3" placeholder="Any special requirements, fragile items, handling instructions..."></textarea>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <div></div>
+                                <button type="button" class="btn btn-primary" onclick="nextStep(2)">
+                                    Next <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 2: Locations & Vehicle -->
+                        <div class="form-step" id="step2">
+                            <h3><i class="fas fa-map-marked-alt"></i> Locations & Vehicle Selection</h3>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="pickup"><i class="fas fa-map-pin"></i> Pickup Location</label>
+                                    <input type="text" id="pickup" class="form-control" placeholder="Enter pickup address" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="delivery"><i class="fas fa-flag-checkered"></i> Delivery Location</label>
+                                    <input type="text" id="delivery" class="form-control" placeholder="Enter delivery address" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="vehicleType"><i class="fas fa-truck"></i> Vehicle Type</label>
+                                    <select id="vehicleType" class="form-control select" required onchange="updateVehiclePreview()">
+                                        <option value="">Select vehicle type</option>
+                                        <option value="bakkie">Bakkie (up to 1.5T)</option>
+                                        <option value="5ton">5-Ton Truck</option>
+                                        <option value="lorry">Lorry (up to 15T)</option>
+                                        <option value="refrigerated">Refrigerated Truck</option>
+                                        <option value="flatbed">Flatbed Truck</option>
+                                        <option value="tanker">Tanker Truck</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="date"><i class="fas fa-calendar-alt"></i> Preferred Date</label>
+                                    <input type="date" id="date" class="form-control" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="time"><i class="fas fa-clock"></i> Preferred Time</label>
+                                    <select id="time" class="form-control select" required>
+                                        <option value="">Select time window</option>
+                                        <option value="morning">Morning (8:00 - 12:00)</option>
+                                        <option value="afternoon">Afternoon (12:00 - 16:00)</option>
+                                        <option value="evening">Evening (16:00 - 20:00)</option>
+                                        <option value="anytime">Anytime Today</option>
+                                        <option value="specific">Specific Time (Will specify)</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="urgency"><i class="fas fa-bolt"></i> Urgency Level</label>
+                                    <select id="urgency" class="form-control select" onchange="updatePriceEstimate()">
+                                        <option value="normal">Normal (1-2 hours)</option>
+                                        <option value="priority">Priority (30-60 minutes)</option>
+                                        <option value="emergency">Emergency (15-30 minutes)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-outline" onclick="prevStep(1)">
+                                    <i class="fas fa-arrow-left"></i> Back
+                                </button>
+                                <button type="button" class="btn btn-primary" onclick="nextStep(3)">
+                                    Next <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 3: Contact Information -->
+                        <div class="form-step" id="step3">
+                            <h3><i class="fas fa-user"></i> Your Contact Information</h3>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="fullName"><i class="fas fa-user-circle"></i> Full Name</label>
+                                    <input type="text" id="fullName" class="form-control" placeholder="Enter your full name" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="company"><i class="fas fa-building"></i> Company (Optional)</label>
+                                    <input type="text" id="company" class="form-control" placeholder="Company name">
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="email"><i class="fas fa-envelope"></i> Email Address</label>
+                                    <input type="email" id="email" class="form-control" placeholder="your@email.com" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="phone"><i class="fas fa-phone"></i> Phone Number</label>
+                                    <input type="tel" id="phone" class="form-control" placeholder="+264 81 123 4567" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="contactMethod"><i class="fas fa-comments"></i> Preferred Contact Method</label>
+                                <div style="display: flex; gap: 1rem; margin-top: 0.5rem; flex-wrap: wrap;">
+                                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                        <input type="radio" name="contactMethod" value="whatsapp" checked>
+                                        <i class="fab fa-whatsapp" style="color: #25D366;"></i> WhatsApp
+                                    </label>
+                                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                        <input type="radio" name="contactMethod" value="phone">
+                                        <i class="fas fa-phone" style="color: #0056B3;"></i> Phone Call
+                                    </label>
+                                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                        <input type="radio" name="contactMethod" value="sms">
+                                        <i class="fas fa-sms" style="color: #00A859;"></i> SMS
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="notes"><i class="fas fa-sticky-note"></i> Additional Notes</label>
+                                <textarea id="notes" class="form-control" rows="2" placeholder="Any special instructions for the driver..."></textarea>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-outline" onclick="prevStep(2)">
+                                    <i class="fas fa-arrow-left"></i> Back
+                                </button>
+                                <button type="button" class="btn btn-primary" onclick="nextStep(4)">
+                                    Review & Confirm <i class="fas fa-check"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Step 4: Confirmation -->
+                        <div class="form-step" id="step4">
+                            <h3><i class="fas fa-check-circle"></i> Review Your Booking</h3>
+                            
+                            <div id="summaryContent" style="background: #F9FAFB; padding: 2rem; border-radius: 15px; margin-bottom: 2rem;">
+                                <!-- Summary will be populated by JavaScript -->
+                            </div>
+                            
+                            <div class="form-group">
+                                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                    <input type="checkbox" id="terms" required>
+                                    <span>I agree to the <a href="#" style="color: #0056B3;">Terms of Service</a> and <a href="#" style="color: #0056B3;">Privacy Policy</a></span>
+                                </label>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                                    <input type="checkbox" id="insurance" onchange="updatePriceEstimate()">
+                                    <span>Add load insurance (+N$ 200)</span>
+                                </label>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-outline" onclick="prevStep(3)">
+                                    <i class="fas fa-arrow-left"></i> Back
+                                </button>
+                                <button type="button" class="btn btn-primary" onclick="confirmBooking()">
+                                    <i class="fas fa-paper-plane"></i> Confirm Booking
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="booking-sidebar">
+                    <h3>Booking Summary</h3>
+                    
+                    <div class="vehicle-preview-container">
+                        <div class="vehicle-preview" id="vehiclePreview">
+                            <div class="default-icon">
+                                <i class="fas fa-truck"></i>
+                            </div>
+                            <div class="vehicle-name">Select Vehicle</div>
+                        </div>
+                    </div>
+                    
+                    <div class="booking-summary">
+                        <div class="summary-item">
+                            <span>Vehicle Type:</span>
+                            <span class="summary-value" id="summaryVehicle">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Estimated Distance:</span>
+                            <span class="summary-value" id="summaryDistance">- km</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Base Rate:</span>
+                            <span class="summary-value" id="summaryBase">N$ -</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Urgency Fee:</span>
+                            <span class="summary-value" id="summaryUrgency">N$ 0</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Insurance:</span>
+                            <span class="summary-value" id="summaryInsurance">N$ 0</span>
+                        </div>
+                        <div class="summary-item total">
+                            <span>Total Estimate:</span>
+                            <span class="summary-value" id="summaryTotal">N$ 0</span>
+                        </div>
+                    </div>
+                    
+                    <div class="price-estimate" id="priceEstimate">
+                        N$ 0
+                    </div>
+                    <p class="estimate-note">This is an estimated price. Final price may vary based on exact requirements.</p>
+                    
+                    <div class="whatsapp-booking-card">
+                        <h4><i class="fab fa-whatsapp"></i> Book via WhatsApp</h4>
+                        <p style="color: #6B7280; font-size: 0.875rem; margin-bottom: 1rem;">
+                            Low data? Book directly via WhatsApp for simple bookings.
+                        </p>
+                        <a href="https://wa.me/264817923700?text=Hello%20BaTLorriH%2C%20I%20need%20to%20book%20a%20vehicle" 
+                           class="btn-whatsapp" 
+                           target="_blank">
+                            <i class="fab fa-whatsapp"></i> WhatsApp Booking
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Confirmation Modal -->
+    <div class="confirmation-modal" id="confirmationModal">
+        <div class="confirmation-content">
+            <div class="confirmation-header">
+                <button class="close-modal" onclick="closeConfirmationModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+                <h2><i class="fas fa-check-circle"></i> Booking Confirmed!</h2>
+                <p>Your booking has been successfully submitted</p>
+            </div>
+            <div class="confirmation-body">
+                <div class="vehicle-image-map">
+                    <div class="vehicle-preview" id="confirmationVehicleImage">
+                        <div class="default-icon">
+                            <i class="fas fa-truck"></i>
+                        </div>
+                        <div class="vehicle-name" id="confirmationVehicleName">Vehicle</div>
+                    </div>
+                    <div class="route-map">
+                        <i class="fas fa-route"></i>
+                    </div>
+                </div>
+                
+                <div class="booking-details">
+                    <h3><i class="fas fa-info-circle"></i> Booking Details</h3>
+                    <div id="confirmationDetails">
+                        <!-- Booking details will be populated here -->
+                    </div>
+                </div>
+                
+                <div style="background: linear-gradient(135deg, rgba(0, 86, 179, 0.1) 0%, rgba(0, 168, 89, 0.1) 100%); padding: 1.5rem; border-radius: 15px; margin-bottom: 1.5rem;">
+                    <h4 style="color: #0056B3; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fas fa-shipping-fast"></i> What Happens Next?
+                    </h4>
+                    <p style="color: #374151; font-size: 0.875rem;">
+                        Your booking will be matched with available drivers. You'll receive a confirmation call within 15 minutes. 
+                        Track your driver in real-time once assigned.
+                    </p>
+                </div>
+                
+                <div class="confirmation-actions">
+                    <button class="btn btn-outline" onclick="closeConfirmationModal()">
+                        <i class="fas fa-home"></i> Back to Home
+                    </button>
+                    <button class="btn btn-primary" onclick="trackBooking()">
+                        <i class="fas fa-map-marker-alt"></i> Track Booking
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-brand">
+                    <a href="index.html" class="footer-logo">
+                        <div class="logo-icon" style="background: url('assets/logo.png') center/contain no-repeat; filter: brightness(0) invert(1);">BL</div>
+                        <div class="logo-text">BaTLorriH</div>
+                    </a>
+                    <p class="footer-description">
+                        Namibia's leading digital logistics platform connecting shippers with verified transport providers across the country.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="how-it-works.html"><i class="fas fa-chevron-right"></i> How It Works</a></li>
+                        <li><a href="vehicles.html"><i class="fas fa-chevron-right"></i> Vehicle Types</a></li>
+                        <li><a href="book.html"><i class="fas fa-chevron-right"></i> Book a Vehicle</a></li>
+                        <li><a href="drivers.html"><i class="fas fa-chevron-right"></i> Drive With Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Help Center</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Safety Center</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Community Guidelines</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Privacy Policy</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-contact">
+                    <h3>Contact Us</h3>
+                    <a href="tel:+264612345678">
+                        <i class="fas fa-phone"></i> +264 61 234 5678
+                    </a>
+                    <a href="mailto:info@batlorrih.com.na">
+                        <i class="fas fa-envelope"></i> info@batlorrih.com.na
+                    </a>
+                    <a href="https://wa.me/264811234567" target="_blank">
+                        <i class="fab fa-whatsapp"></i> +264 81 123 4567
+                    </a>
+                    <a href="#">
+                        <i class="fas fa-map-marker-alt"></i> Windhoek, Namibia
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 BaTLorriH Logistics. All rights reserved. | Connecting Namibia, One Load at a Time</p>
+            </div>
+        </div>
+    </footer>
+
+ <script>
+        // Form step navigation
+        let currentStep = 1;
+        
+        function nextStep(step) {
+            // Validate current step before moving
+            if (!validateCurrentStep()) {
+                return;
+            }
+            
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            document.querySelectorAll('.progress-step')[currentStep - 1].querySelector('.step-circle').classList.remove('active');
+            
+            currentStep = step;
+            document.getElementById(`step${currentStep}`).classList.add('active');
+            document.querySelectorAll('.progress-step')[currentStep - 1].querySelector('.step-circle').classList.add('active');
+            
+            // Update previous steps as completed
+            for (let i = 0; i < currentStep - 1; i++) {
+                document.querySelectorAll('.progress-step')[i].querySelector('.step-circle').classList.add('completed');
+                document.querySelectorAll('.progress-step')[i].querySelector('.step-label').classList.add('active');
+            }
+            
+            if (step === 4) {
+                updateSummary();
+            }
+            
+            updatePriceEstimate();
+            scrollToTop();
+        }
+        
+        function prevStep(step) {
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            document.querySelectorAll('.progress-step')[currentStep - 1].querySelector('.step-circle').classList.remove('active');
+            
+            currentStep = step;
+            document.getElementById(`step${currentStep}`).classList.add('active');
+            document.querySelectorAll('.progress-step')[currentStep - 1].querySelector('.step-circle').classList.add('active');
+            
+            // Remove completed from steps after current
+            for (let i = step; i < 4; i++) {
+                document.querySelectorAll('.progress-step')[i].querySelector('.step-circle').classList.remove('completed');
+                document.querySelectorAll('.progress-step')[i].querySelector('.step-label').classList.remove('active');
+            }
+            
+            scrollToTop();
+        }
+        
+        function scrollToTop() {
+            // Scroll to top of form for better UX
+            document.querySelector('.booking-form-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        
+        function validateCurrentStep() {
+            let isValid = true;
+            
+            // Validate Step 1
+            if (currentStep === 1) {
+                const loadType = document.getElementById('loadType');
+                const weight = document.getElementById('weight');
+                
+                if (!loadType.value) {
+                    showError(loadType, 'Please select a load type');
+                    isValid = false;
+                } else {
+                    clearError(loadType);
+                }
+                
+                if (!weight.value || weight.value <= 0) {
+                    showError(weight, 'Please enter a valid weight');
+                    isValid = false;
+                } else {
+                    clearError(weight);
+                }
+            }
+            
+            // Validate Step 2
+            if (currentStep === 2) {
+                const pickup = document.getElementById('pickup');
+                const delivery = document.getElementById('delivery');
+                const vehicleType = document.getElementById('vehicleType');
+                const date = document.getElementById('date');
+                
+                if (!pickup.value.trim()) {
+                    showError(pickup, 'Please enter pickup location');
+                    isValid = false;
+                } else {
+                    clearError(pickup);
+                }
+                
+                if (!delivery.value.trim()) {
+                    showError(delivery, 'Please enter delivery location');
+                    isValid = false;
+                } else {
+                    clearError(delivery);
+                }
+                
+                if (!vehicleType.value) {
+                    showError(vehicleType, 'Please select a vehicle type');
+                    isValid = false;
+                } else {
+                    clearError(vehicleType);
+                }
+                
+                if (!date.value) {
+                    showError(date, 'Please select a date');
+                    isValid = false;
+                } else {
+                    clearError(date);
+                }
+            }
+            
+            // Validate Step 3
+            if (currentStep === 3) {
+                const fullName = document.getElementById('fullName');
+                const email = document.getElementById('email');
+                const phone = document.getElementById('phone');
+                
+                if (!fullName.value.trim()) {
+                    showError(fullName, 'Please enter your full name');
+                    isValid = false;
+                } else {
+                    clearError(fullName);
+                }
+                
+                if (!email.value.trim() || !isValidEmail(email.value)) {
+                    showError(email, 'Please enter a valid email address');
+                    isValid = false;
+                } else {
+                    clearError(email);
+                }
+                
+                if (!phone.value.trim()) {
+                    showError(phone, 'Please enter your phone number');
+                    isValid = false;
+                } else {
+                    clearError(phone);
+                }
+            }
+            
+            return isValid;
+        }
+        
+        function isValidEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+        
+        function showError(input, message) {
+            const formGroup = input.closest('.form-group');
+            formGroup.classList.add('error');
+            
+            // Remove existing error message
+            let errorElement = formGroup.querySelector('.error-message');
+            if (!errorElement) {
+                errorElement = document.createElement('div');
+                errorElement.className = 'error-message';
+                formGroup.appendChild(errorElement);
+            }
+            errorElement.textContent = message;
+            errorElement.style.color = '#dc2626';
+            errorElement.style.fontSize = '0.875rem';
+            errorElement.style.marginTop = '0.25rem';
+            
+            input.style.borderColor = '#dc2626';
+        }
+        
+        function clearError(input) {
+            const formGroup = input.closest('.form-group');
+            formGroup.classList.remove('error');
+            
+            const errorElement = formGroup.querySelector('.error-message');
+            if (errorElement) {
+                errorElement.remove();
+            }
+            
+            input.style.borderColor = '#D1D5DB';
+        }
+    </script>
+
+<script>
+    // Vehicle images mapping
+    const vehicleImages = {
+        'bakkie': 'assets/Bakkie.png',
+        '5ton': 'assets/5-ton-truck.jpg',
+        'lorry': 'assets/lorry.png',
+        'refrigerated': 'assets/refrigirated.png',
+        'flatbed': 'assets/flatbed.jpg',
+        'tanker': 'assets/tanker.jpg'
+    };
+    
+    // Update vehicle preview image
+    function updateVehiclePreview() {
+        const vehicleType = document.getElementById('vehicleType').value;
+        const previewElement = document.getElementById('vehiclePreview');
+        
+        if (vehicleType && vehicleImages[vehicleType]) {
+            const vehicleName = document.getElementById('vehicleType').options[document.getElementById('vehicleType').selectedIndex].text;
+            previewElement.innerHTML = `
+                <img src="${vehicleImages[vehicleType]}" alt="${vehicleName}" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\\'default-icon\\'><i class=\\'fas fa-truck\\'></i></div><div class=\\'vehicle-name\\'>${vehicleName}</div>';">
+                <div class="vehicle-name">${vehicleName}</div>
+            `;
+        } else {
+            previewElement.innerHTML = `
+                <div class="default-icon">
+                    <i class="fas fa-truck"></i>
+                </div>
+                <div class="vehicle-name">Select Vehicle</div>
+            `;
+        }
+        
+        updatePriceEstimate();
+    }
+    
+    // Update price estimate
+    function updatePriceEstimate() {
+        const vehicleType = document.getElementById('vehicleType').value;
+        const weight = parseFloat(document.getElementById('weight').value) || 0;
+        const urgency = document.getElementById('urgency').value;
+        const insurance = document.getElementById('insurance').checked;
+        
+        let basePrice = 0;
+        let urgencyFee = 0;
+        let insuranceFee = insurance ? 200 : 0;
+        let distance = 5; // Default estimated distance
+        
+        // Set base price based on vehicle type
+        switch(vehicleType) {
+            case 'bakkie':
+                basePrice = 150;
+                break;
+            case '5ton':
+                basePrice = 300;
+                break;
+            case 'lorry':
+                basePrice = 450;
+                break;
+            case 'refrigerated':
+                basePrice = 550;
+                break;
+            case 'flatbed':
+                basePrice = 500;
+                break;
+            case 'tanker':
+                basePrice = 600;
+                break;
+        }
+        
+        // Add weight-based surcharge
+        if (weight > 1000) basePrice *= 1.2;
+        if (weight > 3000) basePrice *= 1.5;
+        
+        // Urgency fee
+        switch(urgency) {
+            case 'priority':
+                urgencyFee = basePrice * 0.3;
+                break;
+            case 'emergency':
+                urgencyFee = basePrice * 0.5;
+                break;
+        }
+        
+        const total = (basePrice * distance) + urgencyFee + insuranceFee;
+        
+        // Update display
+        const vehicleDisplay = vehicleType ? 
+            document.getElementById('vehicleType').options[document.getElementById('vehicleType').selectedIndex].text.split('(')[0].trim() : 
+            '-';
+        document.getElementById('summaryVehicle').textContent = vehicleDisplay;
+        document.getElementById('summaryDistance').textContent = `${distance} km`;
+        document.getElementById('summaryBase').textContent = `N$ ${(basePrice * distance).toFixed(2)}`;
+        document.getElementById('summaryUrgency').textContent = `N$ ${urgencyFee.toFixed(2)}`;
+        document.getElementById('summaryInsurance').textContent = `N$ ${insuranceFee.toFixed(2)}`;
+        document.getElementById('summaryTotal').textContent = `N$ ${total.toFixed(2)}`;
+        document.getElementById('priceEstimate').textContent = `N$ ${total.toFixed(2)}`;
+    }
+    
+    // Update booking summary
+    function updateSummary() {
+        const summaryContent = document.getElementById('summaryContent');
+        const loadType = document.getElementById('loadType').value || '-';
+        const weight = document.getElementById('weight').value || '-';
+        const pickup = document.getElementById('pickup').value || '-';
+        const delivery = document.getElementById('delivery').value || '-';
+        const vehicleType = document.getElementById('vehicleType').value ? 
+            document.getElementById('vehicleType').options[document.getElementById('vehicleType').selectedIndex].text.split('(')[0].trim() : 
+            '-';
+        const date = document.getElementById('date').value || '-';
+        const time = document.getElementById('time').value ? 
+            document.getElementById('time').options[document.getElementById('time').selectedIndex].text : 
+            '-';
+        const fullName = document.getElementById('fullName').value || '-';
+        const phone = document.getElementById('phone').value || '-';
+        
+        summaryContent.innerHTML = `
+            <div style="margin-bottom: 1.5rem;">
+                <strong style="color: #0056B3; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                    <i class="fas fa-box"></i> Load Details
+                </strong>
+                <div>Type: ${loadType}</div>
+                <div>Weight: ${weight} kg</div>
+            </div>
+            <div style="margin-bottom: 1.5rem;">
+                <strong style="color: #0056B3; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                    <i class="fas fa-map-marked-alt"></i> Locations
+                </strong>
+                <div>From: ${pickup}</div>
+                <div>To: ${delivery}</div>
+            </div>
+            <div style="margin-bottom: 1.5rem;">
+                <strong style="color: #0056B3; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                    <i class="fas fa-truck"></i> Vehicle & Timing
+                </strong>
+                <div>Vehicle: ${vehicleType}</div>
+                <div>Date: ${new Date(date).toLocaleDateString()}</div>
+                <div>Time: ${time}</div>
+            </div>
+            <div>
+                <strong style="color: #0056B3; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                    <i class="fas fa-user"></i> Contact
+                </strong>
+                <div>Name: ${fullName}</div>
+                <div>Phone: ${phone}</div>
+            </div>
+        `;
+    }
+    
+    // Fixed Confirm booking and save to Supabase
+    // FIXED: SIMPLIFIED CONFIRM BOOKING FUNCTION
+async function confirmBooking() {
+    const terms = document.getElementById('terms');
+    
+    if (!terms.checked) {
+        alert('Please agree to the Terms of Service and Privacy Policy to continue.');
+        return;
+    }
+    
+    const confirmBtn = document.querySelector('#step4 .btn-primary');
+    const originalText = confirmBtn.innerHTML;
+    confirmBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving to Database...';
+    confirmBtn.disabled = true;
+    
+    try {
+        // Collect only essential data for testing
+        const bookingData = {
+            pickup_location: document.getElementById('pickup').value,
+            delivery_location: document.getElementById('delivery').value,
+            vehicle_type: document.getElementById('vehicleType').value,
+            preferred_date: document.getElementById('date').value,
+            preferred_time: document.getElementById('time').value,
+            customer_name: document.getElementById('fullName').value,
+            customer_email: document.getElementById('email').value,
+            customer_phone: document.getElementById('phone').value,
+            estimated_price: parseFloat(document.getElementById('summaryTotal').textContent.replace('N$ ', '')) || 0,
+            booking_reference: `BTH-${Date.now().toString().slice(-6)}`,
+            status: 'pending'
+        };
+        
+        console.log('Saving booking:', bookingData);
+        
+        // Use the FIXED save function
+        const result = await saveBookingToSupabase(bookingData);
+        
+        if (result.success) {
+            // Show success message
+            alert('✅ Booking saved successfully! Reference: ' + bookingData.booking_reference);
+            
+            // Update confirmation modal
+            updateConfirmationModal(bookingData, result.data);
+            
+            // Show success modal
+            document.getElementById('confirmationModal').classList.add('active');
+            
+        } else {
+            alert('⚠️ ' + result.error + '\n\nYour booking has been saved locally.');
+            // Fallback to localStorage
+            const localResult = await saveToLocalStorage(bookingData);
+            updateConfirmationModal(bookingData, localResult.data);
+            document.getElementById('confirmationModal').classList.add('active');
+        }
+        
+        confirmBtn.innerHTML = originalText;
+        confirmBtn.disabled = false;
+        
+    } catch (error) {
+        console.error('Booking error:', error);
+        alert('❌ Error: ' + error.message + '\n\nUsing local storage fallback.');
+        
+        // Fallback
+        const bookingData = {
+            pickup_location: document.getElementById('pickup').value,
+            delivery_location: document.getElementById('delivery').value,
+            vehicle_type: document.getElementById('vehicleType').value,
+            customer_name: document.getElementById('fullName').value,
+            customer_phone: document.getElementById('phone').value,
+            booking_reference: `LOCAL-${Date.now().toString().slice(-6)}`,
+            status: 'pending'
+        };
+        
+        const localResult = await saveToLocalStorage(bookingData);
+        updateConfirmationModal(bookingData, localResult.data);
+        document.getElementById('confirmationModal').classList.add('active');
+        
+        confirmBtn.innerHTML = originalText;
+        confirmBtn.disabled = false;
+    }
+}
+    
+    // FIXED: Save data to Supabase
+    // SIMPLIFIED: Save data to Supabase
+async function saveToSupabase(bookingData) {
+    console.log('🔄 Attempting to save to Supabase...');
+    
+    try {
+        // Prepare data
+        const dataToInsert = {
+            load_type: bookingData.load_type,
+            pickup_location: bookingData.pickup_location,
+            delivery_location: bookingData.delivery_location,
+            vehicle_type: bookingData.vehicle_type,
+            preferred_date: bookingData.preferred_date,
+            preferred_time: bookingData.preferred_time,
+            customer_name: bookingData.customer_name,
+            customer_email: bookingData.customer_email,
+            customer_phone: bookingData.customer_phone,
+            estimated_price: bookingData.estimated_price,
+            booking_reference: bookingData.booking_reference,
+            status: 'pending',
+            created_at: new Date().toISOString()
+        };
+        
+        console.log('Data to insert:', dataToInsert);
+        
+        // SIMPLE INSERT - NO SELECT FIRST
+        const { data, error } = await window.supabase
+            .from('bookings')
+            .insert([dataToInsert]);
+        
+        if (error) {
+            console.error('❌ Supabase insert error:', error);
+            console.error('Error details:', error.details);
+            console.error('Error hint:', error.hint);
+            
+            // Fallback to localStorage
+            return await saveToLocalStorage(bookingData);
+        }
+        
+        console.log('✅ Data sent to Supabase successfully');
+        
+        // Create success response
+        return {
+            success: true,
+            data: {
+                ...bookingData,
+                id: 'supabase-' + Date.now(),
+                status: 'pending'
+            }
+        };
+        
+    } catch (error) {
+        console.error('❌ Exception in saveToSupabase:', error);
+        return await saveToLocalStorage(bookingData);
+    }
+}
+
+    // Fixed: Check database setup
+    async function checkDatabaseSetup() {
+        console.log('🔍 Checking database setup...');
+        
+        if (!window.supabase) {
+            console.error('❌ Supabase client not available');
+            return false;
+        }
+        
+        try {
+            // Try to access the bookings table
+            const { data, error } = await window.supabase
+                .from('bookings')
+                .select('id')
+                .limit(1);
+            
+            if (error) {
+                console.error('❌ Database check failed:', error);
+                
+                if (error.code === '42P01' || error.message.includes('relation')) {
+                    console.log('📋 The "bookings" table does not exist.');
+                    console.log('💡 Please create the table in Supabase SQL Editor.');
+                    
+                    const sql = `CREATE TABLE IF NOT EXISTS bookings (
+                        id BIGSERIAL PRIMARY KEY,
+                        load_type VARCHAR(100),
+                        weight_kg INTEGER,
+                        length_m DECIMAL(5,2),
+                        width_m DECIMAL(5,2),
+                        height_m DECIMAL(5,2),
+                        load_value_nam INTEGER,
+                        description TEXT,
+                        pickup_location TEXT NOT NULL,
+                        delivery_location TEXT NOT NULL,
+                        vehicle_type VARCHAR(50) NOT NULL,
+                        preferred_date DATE NOT NULL,
+                        preferred_time VARCHAR(50) NOT NULL,
+                        urgency_level VARCHAR(50),
+                        customer_name VARCHAR(200) NOT NULL,
+                        customer_company VARCHAR(200),
+                        customer_email VARCHAR(200) NOT NULL,
+                        customer_phone VARCHAR(20) NOT NULL,
+                        preferred_contact VARCHAR(20),
+                        additional_notes TEXT,
+                        insurance_requested BOOLEAN DEFAULT false,
+                        estimated_price DECIMAL(10,2) NOT NULL,
+                        status VARCHAR(50) DEFAULT 'pending',
+                        booking_reference VARCHAR(50) UNIQUE NOT NULL,
+                        created_at TIMESTAMPTZ DEFAULT NOW()
+                    );`;
+                    
+                    console.log('SQL to create table:', sql);
+                    
+                    // Show alert only in development
+                    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                        const shouldOpen = confirm(
+                            'Database setup required.\n\n' +
+                            'The "bookings" table does not exist in your Supabase database.\n\n' +
+                            'Click OK to open Supabase dashboard and create the table.'
+                        );
+                        
+                        if (shouldOpen) {
+                            window.open('https://supabase.com/dashboard', '_blank');
+                        }
+                    }
+                }
+                return false;
+            }
+            
+            console.log('✅ Database connection successful!');
+            return true;
+            
+        } catch (error) {
+            console.error('❌ Database check error:', error);
+            return false;
+        }
+    }
+
+    // FIXED: SIMPLIFIED Save function - THIS IS THE KEY FIX
+async function saveBookingToSupabase(bookingData) {
+    console.log('🔄 Saving to Supabase...');
+    
+    try {
+        // Validate Supabase client
+        if (!window.supabase) {
+            throw new Error('Supabase client not initialized');
+        }
+        
+        // SIMPLEST POSSIBLE INSERT
+        const { data, error } = await window.supabase
+            .from('bookings')
+            .insert([
+                {
+                    pickup_location: bookingData.pickup_location,
+                    delivery_location: bookingData.delivery_location,
+                    vehicle_type: bookingData.vehicle_type,
+                    customer_name: bookingData.customer_name,
+                    customer_email: bookingData.customer_email || 'not-provided@example.com',
+                    customer_phone: bookingData.customer_phone,
+                    booking_reference: bookingData.booking_reference,
+                    status: 'pending',
+                    estimated_price: bookingData.estimated_price || 0
+                }
+            ]);
+        
+        if (error) {
+            console.error('❌ Supabase error details:', {
+                message: error.message,
+                code: error.code,
+                details: error.details,
+                hint: error.hint
+            });
+            throw error;
+        }
+        
+        console.log('✅ Success response:', data);
+        
+        // Return the data we tried to save
+        return {
+            success: true,
+            data: {
+                ...bookingData,
+                id: 'temp-' + Date.now()
+            }
+        };
+        
+    } catch (error) {
+        console.error('❌ Exception in saveBooking:', error);
+        return {
+            success: false,
+            error: error.message || 'Unknown error'
+        };
+    }
+}
+
+    // Fallback: Save to localStorage if Supabase fails
+    async function saveToLocalStorage(bookingData) {
+        try {
+            console.log('📱 Using localStorage fallback...');
+            
+            // Generate a local ID
+            const localId = 'local-' + Date.now();
+            const localData = {
+                ...bookingData,
+                id: localId,
+                local_save: true,
+                saved_at: new Date().toISOString()
+            };
+            
+            // Get existing bookings or create new array
+            const existingBookings = JSON.parse(localStorage.getItem('batlorrih_bookings') || '[]');
+            
+            // Add new booking
+            existingBookings.push(localData);
+            
+            // Save back to localStorage
+            localStorage.setItem('batlorrih_bookings', JSON.stringify(existingBookings));
+            
+            console.log('✅ Saved to localStorage:', localData);
+            
+            return {
+                success: true,
+                data: localData,
+                warning: 'Note: Saved locally. Will sync with server later.'
+            };
+            
+        } catch (error) {
+            console.error('❌ localStorage fallback failed:', error);
+            return {
+                success: false,
+                error: 'Failed to save booking locally. Please try again.'
+            };
+        }
+    }
+    
+    // FIXED: Update confirmation modal to properly display data
+    function updateConfirmationModal(bookingData, dbData) {
+        const confirmationDetails = document.getElementById('confirmationDetails');
+        const vehicleImage = document.getElementById('confirmationVehicleImage');
+        const vehicleName = document.getElementById('confirmationVehicleName');
+        
+        // Get vehicle display name
+        let vehicleDisplayName = 'Select Vehicle';
+        const vehicleSelect = document.getElementById('vehicleType');
+        if (vehicleSelect.value) {
+            vehicleDisplayName = vehicleSelect.options[vehicleSelect.selectedIndex].text.split('(')[0].trim();
+        }
+        
+        // Update vehicle image in modal
+        if (bookingData.vehicle_type && vehicleImages[bookingData.vehicle_type]) {
+            vehicleImage.innerHTML = `
+                <img src="${vehicleImages[bookingData.vehicle_type]}" alt="${vehicleDisplayName}" 
+                     onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\"default-icon\"><i class=\"fas fa-truck\"></i></div><div class=\"vehicle-name\">${vehicleDisplayName}</div>';">
+                <div class="vehicle-name">${vehicleDisplayName}</div>
+            `;
+            vehicleName.textContent = vehicleDisplayName;
+        } else {
+            vehicleImage.innerHTML = `
+                <div class="default-icon">
+                    <i class="fas fa-truck"></i>
+                </div>
+                <div class="vehicle-name">${vehicleDisplayName}</div>
+            `;
+            vehicleName.textContent = vehicleDisplayName;
+        }
+        
+        // Format date properly
+        let formattedDate = 'Not specified';
+        if (dbData.preferred_date) {
+            try {
+                formattedDate = new Date(dbData.preferred_date).toLocaleDateString('en-US', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+            } catch (e) {
+                formattedDate = dbData.preferred_date;
+            }
+        }
+        
+        // Display booking data in confirmation modal
+        confirmationDetails.innerHTML = `
+            <div class="detail-item">
+                <span class="detail-label">Booking Reference:</span>
+                <span class="detail-value" style="font-weight: bold; color: #0056B3;">${dbData.booking_reference}</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">Booking ID:</span>
+                <span class="detail-value">${dbData.id || 'N/A'}</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">Customer Name:</span>
+                <span class="detail-value">${dbData.customer_name || bookingData.customer_name}</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">Customer Email:</span>
+                <span class="detail-value">${dbData.customer_email || bookingData.customer_email}</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">Customer Phone:</span>
+                <span class="detail-value">${dbData.customer_phone || bookingData.customer_phone}</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">Vehicle Type:</span>
+                <span class="detail-value">${vehicleDisplayName}</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">Pickup Location:</span>
+                <span class="detail-value">${dbData.pickup_location || bookingData.pickup_location}</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">Delivery Location:</span>
+                <span class="detail-value">${dbData.delivery_location || bookingData.delivery_location}</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">Scheduled Date:</span>
+                <span class="detail-value">${formattedDate}</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">Preferred Time:</span>
+                <span class="detail-value">${dbData.preferred_time || bookingData.preferred_time}</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">Load Type:</span>
+                <span class="detail-value">${dbData.load_type || bookingData.load_type}</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">Load Weight:</span>
+                <span class="detail-value">${dbData.weight_kg || bookingData.weight_kg || '0'} kg</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">Status:</span>
+                <span class="detail-value" style="color: #FFA500; font-weight: bold;">${(dbData.status || 'pending').toUpperCase()}</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">Total Amount:</span>
+                <span class="detail-value" style="font-weight: 700; color: #00A859;">N$ ${(dbData.estimated_price || bookingData.estimated_price || 0).toFixed(2)}</span>
+            </div>
+        `;
+        
+        // Add local storage warning if applicable
+        if (dbData.local_save) {
+            confirmationDetails.innerHTML += `
+                <div class="detail-item" style="background: #FFF3CD; padding: 10px; border-radius: 5px; margin-top: 10px;">
+                    <span class="detail-label" style="color: #856404;">⚠️ Note:</span>
+                    <span class="detail-value" style="color: #856404;">
+                        Saved locally. Please contact support with your booking reference.
+                    </span>
+                </div>
+            `;
+        }
+    }
+    
+    // Send WhatsApp notification
+    function sendWhatsAppNotification(bookingData) {
+        try {
+            // Get vehicle display name
+            let vehicleDisplayName = 'Unknown Vehicle';
+            const vehicleSelect = document.getElementById('vehicleType');
+            if (vehicleSelect.value) {
+                vehicleDisplayName = vehicleSelect.options[vehicleSelect.selectedIndex].text.split('(')[0].trim();
+            }
+            
+            const message = `📦 *New Booking Received!*\n\n` +
+                          `📋 *Reference:* ${bookingData.booking_reference}\n` +
+                          `👤 *Customer:* ${bookingData.customer_name}\n` +
+                          `📞 *Phone:* ${bookingData.customer_phone}\n` +
+                          `📧 *Email:* ${bookingData.customer_email}\n` +
+                          `🚚 *Vehicle:* ${vehicleDisplayName}\n` +
+                          `📍 *From:* ${bookingData.pickup_location}\n` +
+                          `🏁 *To:* ${bookingData.delivery_location}\n` +
+                          `📅 *Date:* ${bookingData.preferred_date}\n` +
+                          `⏰ *Time:* ${bookingData.preferred_time}\n` +
+                          `💰 *Amount:* N$ ${bookingData.estimated_price.toFixed(2)}\n` +
+                          `📦 *Load:* ${bookingData.load_type} (${bookingData.weight_kg || '0'} kg)\n` +
+                          `⚡ *Urgency:* ${bookingData.urgency_level}\n\n` +
+                          `📝 *Additional Notes:* ${bookingData.additional_notes || 'None'}`;
+            
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/264817923700?text=${encodedMessage}`;
+            
+            // Open WhatsApp in new tab for admin notification
+            window.open(whatsappUrl, '_blank');
+            
+            console.log('📱 WhatsApp notification sent');
+        } catch (error) {
+            console.error('Error sending WhatsApp notification:', error);
+        }
+    }
+    
+    // Reset form after successful booking
+    function resetFormAfterDelay() {
+        setTimeout(() => {
+            // Reset the form
+            document.getElementById('bookingForm').reset();
+            
+            // Reset to step 1
+            currentStep = 1;
+            document.querySelectorAll('.form-step').forEach(step => {
+                step.classList.remove('active');
+            });
+            document.getElementById('step1').classList.add('active');
+            
+            // Reset progress indicators
+            document.querySelectorAll('.progress-step').forEach((step, index) => {
+                const circle = step.querySelector('.step-circle');
+                const label = step.querySelector('.step-label');
+                circle.classList.remove('active', 'completed');
+                label.classList.remove('active');
+                if (index === 0) {
+                    circle.classList.add('active');
+                    label.classList.add('active');
+                }
+            });
+            
+            // Reset preview
+            updateVehiclePreview();
+            updatePriceEstimate();
+            
+            console.log('✅ Form reset successfully');
+        }, 3000);
+    }
+    
+    // Close confirmation modal
+    function closeConfirmationModal() {
+        document.getElementById('confirmationModal').classList.remove('active');
+        resetFormAfterDelay();
+    }
+    
+    // Track booking function
+    function trackBooking() {
+        alert('Booking tracking feature will be implemented soon!');
+        closeConfirmationModal();
+    }
+</script>
+
+<script>
+    // Initialize everything when DOM is loaded
+    document.addEventListener('DOMContentLoaded', async function() {
+        console.log('DOM loaded, initializing form...');
+        
+        // Check database setup
+        await checkDatabaseSetup();
+        
+        // Add event listeners for real-time updates
+        document.getElementById('vehicleType').addEventListener('change', updateVehiclePreview);
+        document.getElementById('weight').addEventListener('input', updatePriceEstimate);
+        document.getElementById('urgency').addEventListener('change', updatePriceEstimate);
+        document.getElementById('insurance').addEventListener('change', updatePriceEstimate);
+        
+        // Set minimum date to today
+        const today = new Date().toISOString().split('T')[0];
+        const dateInput = document.getElementById('date');
+        if (dateInput) {
+            dateInput.setAttribute('min', today);
+            dateInput.value = today;
+        }
+        
+        // Initialize price estimate
+        updatePriceEstimate();
+        
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', function() {
+                const navLinks = document.querySelector('.nav-links');
+                navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+                if (navLinks.style.display === 'flex') {
+                    navLinks.style.flexDirection = 'column';
+                    navLinks.style.position = 'absolute';
+                    navLinks.style.top = '80px';
+                    navLinks.style.left = '0';
+                    navLinks.style.right = '0';
+                    navLinks.style.background = 'white';
+                    navLinks.style.padding = '2rem';
+                    navLinks.style.boxShadow = '0 10px 30px rgba(0,0,0,0.1)';
+                    navLinks.style.zIndex = '1000';
+                }
+            });
+        }
+        
+        // Set current year in copyright
+        const year = new Date().getFullYear();
+        const copyrightElement = document.querySelector('.footer-bottom p');
+        if (copyrightElement) {
+            copyrightElement.innerHTML = copyrightElement.innerHTML.replace('2023', year);
+        }
+        
+        console.log('✅ Booking form initialized successfully!');
+    });
+    
+    // Test Supabase connection
+    async function testSupabaseConnection() {
+        console.log('Testing Supabase connection...');
+        
+        if (!window.supabase) {
+            console.error('❌ Supabase client not available');
+            return;
+        }
+        
+        try {
+            const { data, error } = await window.supabase
+                .from('bookings')
+                .select('count')
+                .limit(1);
+            
+            if (error) {
+                console.error('❌ Supabase connection error:', error);
+            } else {
+                console.log('✅ Supabase connection successful!');
+            }
+        } catch (error) {
+            console.error('❌ Supabase test failed:', error);
+        }
+    }
+
+</script>
+
+
+
+</body>
+</html>
