@@ -124,6 +124,36 @@
             border-bottom: 3px solid transparent;
             border-image: linear-gradient(90deg, var(--pmd-blue), var(--green-primary)) 1;
         }
+        .btn-header {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, var(--pmd-blue) 0%, var(--green-primary) 100%);
+            color: white;
+            border-radius: var(--radius-full);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-header:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--gray-700);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: var(--radius);
+            transition: var(--transition);
+        }
         .header-container {
             display: flex;
             justify-content: space-between;
@@ -493,7 +523,7 @@
                 <nav>
                     <ul>
                         
-                        <li><a href="how-it-works.html">How It Works</a></li>
+                        
                         <li><a href="vehicles.html">Vehicles</a></li>
                         <li><a href="book.html">Book Now</a></li>
                         <li><a href="drivers.html">Drive With Us</a></li>
@@ -501,6 +531,7 @@
                         <li><a href="book.html" class="btn-header">
                             <i class="fas fa-shipping-fast"></i> Get Started
                         </a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
                     </ul>
                 </nav>
                 
