@@ -36,6 +36,94 @@
             z-index: 1000;
         }
 
+         /* Navigation */
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--gray-700);
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-full);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--pmd-blue);
+            background: linear-gradient(135deg, rgba(0, 86, 179, 0.1) 0%, rgba(0, 168, 89, 0.1) 100%);
+        }
+
+        nav a.active {
+            color: var(--pmd-blue);
+            background: linear-gradient(135deg, rgba(0, 86, 179, 0.1) 0%, rgba(0, 168, 89, 0.1) 100%);
+        }
+
+        nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--pmd-blue), var(--green-primary));
+            border-radius: var(--radius-full);
+        }
+        .btn-header {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, var(--pmd-blue) 0%, var(--green-primary) 100%);
+            color: white;
+            border-radius: var(--radius-full);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-header:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--gray-700);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: var(--radius);
+            transition: var(--transition);
+        }
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            height: 80px;
+        }
+         /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 3px solid transparent;
+            border-image: linear-gradient(90deg, var(--pmd-blue), var(--green-primary)) 1;
+        }
         .header-container {
             display: flex;
             justify-content: space-between;
@@ -393,21 +481,27 @@
 <body>
     <header>
         <div class="container">
-            <div class="header-container">
+            <div class="nav-container">
                 <a href="index.html" class="logo">
                     <div class="logo-icon" title="BaTLorriH Logo">BL</div>
-                    <div class="logo-text">BaTLorriH</div>
+                    <div class="logo-text-container">
+                        <div class="logo-text">BaTLorriH</div>
+                       
+                    </div>
                 </a>
                 
-                <nav class="nav-links">
-                    <a href="how-it-works.html" class="nav-link active">How It Works</a>
-                    <a href="vehicles.html" class="nav-link">Vehicles</a>
-                    <a href="book.html" class="nav-link">Book Now</a>
-                    <a href="drivers.html" class="nav-link">Drive With Us</a>
-                    <a href="about.html" class="nav-link">About</a>
-                    <a href="book.html" class="btn btn-primary">
-                        <i class="fas fa-shipping-fast"></i> Get Started
-                    </a>
+                <nav>
+                    <ul>
+                        
+                        <li><a href="how-it-works.html">How It Works</a></li>
+                        <li><a href="vehicles.html">Vehicles</a></li>
+                        <li><a href="book.html">Book Now</a></li>
+                        <li><a href="drivers.html">Drive With Us</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="book.html" class="btn-header">
+                            <i class="fas fa-shipping-fast"></i> Get Started
+                        </a></li>
+                    </ul>
                 </nav>
                 
                 <button class="mobile-menu-btn">
