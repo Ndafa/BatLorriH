@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="Styles/main.css">
+    <link rel="stylesheet" href="Styles/mobile-responsive.css">
     <style>
         /* Enhanced Hero Section with Background Image */
         body {
@@ -650,32 +651,7 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <div class="header-container">
-                
-                
-                <nav class="nav-links">
-                    <a href="how-it-works.html" class="nav-link">How It Works</a>
-                    <a href="vehicles.html" class="nav-link">Vehicles</a>
-                    <a href="book.html" class="nav-link">Book Now</a>
-                    <a href="drivers.html" class="nav-link">Drive With Us</a>
-                    <a href="about.html" class="nav-link">About</a>
-                    <a href="contact.html" class="nav-link">Contact</a>
-                    <a href="book.html" class="btn btn-primary">
-                        <i class="fas fa-shipping-fast"></i> Get Started
-                    </a>
-                </nav>
-                
-                <button class="mobile-menu-btn">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <!-- Hero Section -->
+    <!-- Hero Section (Header and Footer injected by header-footer.js) -->
     <section class="hero">
         <div class="container">
             <div class="hero-container">
@@ -817,83 +793,6 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-container">
-                <div class="footer-brand">
-                    <a href="index.html" class="footer-logo">
-                        <div class="logo-icon" title="BaTLorriH Logo">BL</div>
-                        <div class="logo-text">BaTLorriH</div>
-                    </a>
-                    <p class="footer-description">
-                        Namibia's leading digital logistics platform connecting shippers with verified transport providers across the country.
-                    </p>
-                    <div class="social-links">
-                        <a href="#" class="social-link">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="social-link">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="social-link">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="#" class="social-link">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                        <a href="#" class="social-link">
-                            <i class="fab fa-whatsapp"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="footer-links">
-                    <h3>Quick Links</h3>
-                    <ul>
-                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
-                        <li><a href="how-it-works.html"><i class="fas fa-chevron-right"></i> How It Works</a></li>
-                        <li><a href="vehicles.html"><i class="fas fa-chevron-right"></i> Vehicle Types</a></li>
-                        <li><a href="book.html"><i class="fas fa-chevron-right"></i> Book a Vehicle</a></li>
-                        <li><a href="drivers.html"><i class="fas fa-chevron-right"></i> Drive With Us</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-links">
-                    <h3>Support</h3>
-                    <ul>
-                        <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Help Center</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Safety Center</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Community Guidelines</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Privacy Policy</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Terms of Service</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-contact">
-                    <h3>Contact Us</h3>
-                    <a href="tel:+264612345678">
-                        <i class="fas fa-phone"></i> +264 61 234 5678
-                    </a>
-                    <a href="mailto:info@batlorrih.com.na">
-                        <i class="fas fa-envelope"></i> info@batlorrih.com.na
-                    </a>
-                    <a href="https://wa.me/264811234567" target="_blank">
-                        <i class="fab fa-whatsapp"></i> +264 81 123 4567
-                    </a>
-                    <a href="#">
-                        <i class="fas fa-map-marker-alt"></i> Windhoek, Namibia
-                    </a>
-                </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <p>&copy; <span id="currentYear">2026</span> BaTLorriH Logistics. All rights reserved. | Connecting Namibia, One Load at a Time</p>
-            </div>
-        </div>
-    </footer>
-
     <script>
         // GSAP Animations
         document.addEventListener('DOMContentLoaded', function() {
@@ -1013,5 +912,10 @@
             });
         });
     </script>
+    
+    <!-- Load Header & Footer Components -->
+    <script src="js/header-footer.js"></script>
+    <!-- Page-specific functionality -->
+    <script src="js/main.js"></script>
 </body>
 </html>

@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="Styles/mobile-responsive.css">
     <style>
         /* Background with backg.jpeg */
         body {
@@ -14,6 +15,65 @@
                         url('assets/backg.jpeg') center/cover no-repeat fixed;
             font-family: 'Inter', sans-serif;
             color: #333;
+        }
+             /* Navigation */
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--gray-700);
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-full);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--pmd-blue);
+            background: linear-gradient(135deg, rgba(0, 86, 179, 0.1) 0%, rgba(0, 168, 89, 0.1) 100%);
+        }
+
+        nav a.active {
+            color: var(--pmd-blue);
+            background: linear-gradient(135deg, rgba(0, 86, 179, 0.1) 0%, rgba(0, 168, 89, 0.1) 100%);
+        }
+
+        nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--pmd-blue), var(--green-primary));
+            border-radius: var(--radius-full);
+        }
+
+        .btn-header {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, var(--pmd-blue) 0%, var(--green-primary) 100%);
+            color: white;
+            border-radius: var(--radius-full);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-header:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
         }
 
         .about-section {
@@ -572,38 +632,6 @@
     
 </head>
 <body>
-    <header>
-        <div class="container">
-            <div class="nav-container">
-                <a href="index.html" class="logo">
-                    <div class="logo-icon" title="BaTLorriH Logo">BL</div>
-                    <div class="logo-text-container">
-                        <div class="logo-text">BaTLorriH</div>
-                       
-                    </div>
-                </a>
-                
-                <nav>
-                    <ul>
-                        
-                        <li><a href="how-it-works.html">How It Works</a></li>
-                        <li><a href="vehicles.html">Vehicles</a></li>
-                        <li><a href="book.html">Book Now</a></li>
-                        <li><a href="about.html">About</a></li>
-                        <li><a href="book.html" class="btn-header">
-                            <i class="fas fa-shipping-fast"></i> Get Started
-                        </a></li>
-                        <li><a href="contact.html">Contact Us</a></li>
-                    </ul>
-                </nav>
-                
-                <button class="mobile-menu-btn">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </div>
-        </div>
-    </header>
-
     <section class="page-hero">
         <div class="container">
             <h1 class="page-title animate-slide-left">Our Story</h1>
@@ -813,141 +841,9 @@
         </div>
     </section>
 
-    <footer>
-        <div class="container">
-            <div class="footer-container">
-                <div class="footer-brand">
-                    <a href="index.html" class="footer-logo">
-                        <div class="logo-icon" style="background: url('assets/logo.png') center/contain no-repeat; filter: brightness(0) invert(1);"></div>
-                        <div class="logo-text">BaTLorriH</div>
-                    </a>
-                    <p class="footer-description">
-                        Namibia's leading digital logistics platform connecting shippers with verified transport providers across the country.
-                    </p>
-                    <div class="social-links">
-                        <a href="#" class="social-link">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="social-link">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="social-link">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="#" class="social-link">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                        <a href="#" class="social-link">
-                            <i class="fab fa-whatsapp"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="footer-links">
-                    <h3>Quick Links</h3>
-                    <ul>
-                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
-                        <li><a href="how-it-works.html"><i class="fas fa-chevron-right"></i> How It Works</a></li>
-                        <li><a href="vehicles.html"><i class="fas fa-chevron-right"></i> Vehicle Types</a></li>
-                        <li><a href="book.html"><i class="fas fa-chevron-right"></i> Book a Vehicle</a></li>
-                        <li><a href="drivers.html"><i class="fas fa-chevron-right"></i> Drive With Us</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-links">
-                    <h3>Support</h3>
-                    <ul>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Help Center</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Safety Center</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Community Guidelines</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Privacy Policy</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Terms of Service</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-contact">
-                    <h3>Contact Us</h3>
-                    <a href="tel:+264612345678">
-                        <i class="fas fa-phone"></i> +264 61 234 5678
-                    </a>
-                    <a href="mailto:info@batlorrih.com.na">
-                        <i class="fas fa-envelope"></i> info@batlorrih.com.na
-                    </a>
-                    <a href="https://wa.me/264811234567" target="_blank">
-                        <i class="fab fa-whatsapp"></i> +264 81 123 4567
-                    </a>
-                    <a href="#">
-                        <i class="fas fa-map-marker-alt"></i> Windhoek, Namibia
-                    </a>
-                </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <p>&copy; <span id="currentYear">2026</span> BaTLorriH Logistics. All rights reserved. | Connecting Namibia, One Load at a Time</p>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Set current year in copyright
-            document.getElementById('currentYear').textContent = new Date().getFullYear();
-            
-            // Mobile menu toggle
-            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-            const navLinks = document.querySelector('.nav-links');
-            
-            if (mobileMenuBtn && navLinks) {
-                mobileMenuBtn.addEventListener('click', function() {
-                    navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-                    if (navLinks.style.display === 'flex') {
-                        navLinks.style.flexDirection = 'column';
-                        navLinks.style.position = 'absolute';
-                        navLinks.style.top = '80px';
-                        navLinks.style.left = '0';
-                        navLinks.style.right = '0';
-                        navLinks.style.background = 'white';
-                        navLinks.style.padding = '2rem';
-                        navLinks.style.boxShadow = '0 10px 30px rgba(0,0,0,0.1)';
-                        navLinks.style.zIndex = '1000';
-                    }
-                });
-            }
-            
-            // Header scroll effect
-            window.addEventListener('scroll', function() {
-                const header = document.querySelector('header');
-                if (header) {
-                    if (window.scrollY > 50) {
-                        header.style.background = 'rgba(255, 255, 255, 0.98)';
-                        header.style.backdropFilter = 'blur(10px)';
-                    } else {
-                        header.style.background = '';
-                        header.style.backdropFilter = '';
-                    }
-                }
-            });
-            
-            // Animate team cards on scroll
-            const teamCards = document.querySelectorAll('.team-card');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach((entry, index) => {
-                    if (entry.isIntersecting) {
-                        setTimeout(() => {
-                            entry.target.style.opacity = '1';
-                            entry.target.style.transform = 'translateY(0)';
-                        }, index * 100);
-                    }
-                });
-            }, { threshold: 0.1 });
-            
-            teamCards.forEach(card => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
-                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-                observer.observe(card);
-            });
-        });
-    </script>
+    <!-- Load Header & Footer Components -->
+    <script src="js/header-footer.js"></script>
+    <!-- Page-specific functionality -->
+    <script src="js/main.js"></script>
 </body>
 </html>

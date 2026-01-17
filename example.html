@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Example - Using Header & Footer Components</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="Styles/main.css">
+    <link rel="stylesheet" href="Styles/mobile-responsive.css">
+    <style>
+        /* Page-specific styles only */
+        .example-section {
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        .example-content {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.6);
+            padding: 2rem;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+        
+        @media (max-width: 640px) {
+            .example-content {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header and Footer are automatically injected by header-footer.js -->
+    <!-- You only need to include your page content between the scripts -->
+    
+    <main>
+        <section class="example-section">
+            <div class="container">
+                <div class="example-content">
+                    <h1>Header & Footer Component Example</h1>
+                    <p>Notice how the header and footer appear automatically without being in the HTML!</p>
+                    <p>This page is simpler and cleaner because the header and footer are managed by JavaScript.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- IMPORTANT: Include these scripts in this order -->
+    <!-- The header-footer.js MUST come before main.js -->
+    <script src="js/header-footer.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

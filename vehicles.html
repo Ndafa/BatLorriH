@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="Styles/mobile-responsive.css">
     <style>
         
         * {
@@ -1256,32 +1257,6 @@
     </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <div class="header-container">
-                <a href="index.html" class="logo">
-                    <div class="logo-icon" title="BaTLorriH Logo">BL</div>
-                    <div class="logo-text">BaTLorriH</div>
-                </a>
-                
-                <nav class="nav-links">
-                    <a href="how-it-works.html" class="nav-link">How It Works</a>
-                    <a href="vehicles.html" class="nav-link active">Vehicles</a>
-                    <a href="book.html" class="nav-link">Book Now</a>
-                    <a href="drivers.html" class="nav-link">Drive With Us</a>
-                    <a href="about.html" class="nav-link">About</a>
-                    <a href="book.html" class="btn btn-primary">
-                        <i class="fas fa-shipping-fast"></i> Get Started
-                    </a>
-                </nav>
-                
-                <button class="mobile-menu-btn">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </div>
-        </div>
-    </header>
-
     <section class="page-hero">
         <div class="container">
             <h1 class="page-title">Our Vehicle Fleet</h1>
@@ -1627,55 +1602,11 @@
                 <p>&copy; 2026 BaTLorriH Logistics. All rights reserved. | Connecting Namibia, One Load at a Time</p>
             </div>
         </div>
-    </footer>
+    </section>
 
-    <script>
-        // Scroll reveal animation
-        document.addEventListener('DOMContentLoaded', function() {
-            const cards = document.querySelectorAll('.vehicle-card');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach((entry, index) => {
-                    if (entry.isIntersecting) {
-                        setTimeout(() => {
-                            entry.target.classList.add('reveal');
-                        }, index * 100);
-                    }
-                });
-            }, { threshold: 0.1 });
-            
-            cards.forEach(card => observer.observe(card));
-
-            // Mobile menu toggle
-            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-            const navLinks = document.querySelector('.nav-links');
-            
-            mobileMenuBtn.addEventListener('click', function() {
-                navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-                if (navLinks.style.display === 'flex') {
-                    navLinks.style.flexDirection = 'column';
-                    navLinks.style.position = 'absolute';
-                    navLinks.style.top = '80px';
-                    navLinks.style.left = '0';
-                    navLinks.style.right = '0';
-                    navLinks.style.background = 'white';
-                    navLinks.style.padding = '2rem';
-                    navLinks.style.boxShadow = '0 10px 30px rgba(0,0,0,0.1)';
-                }
-            });
-        });
-
-        // Header scroll effect
-        window.addEventListener('scroll', function() {
-            const header = document.querySelector('header');
-            if (window.scrollY > 50) {
-                header.style.background = 'rgba(255, 255, 255, 0.98)';
-                header.style.backdropFilter = 'blur(10px)';
-            } else {
-                header.style.background = '';
-                header.style.backdropFilter = '';
-            }
-        });
-    </script>
+    <!-- Load Header & Footer Components -->
+    <script src="js/header-footer.js"></script>
+    <!-- Page-specific functionality -->
+    <script src="js/main.js"></script>
 </body>
 </html>
